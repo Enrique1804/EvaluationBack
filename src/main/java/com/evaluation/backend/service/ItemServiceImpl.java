@@ -48,12 +48,29 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item postItem(Item theItem) {
-        Item savedItem = repository.save(theItem);
-        return theItem;
+        Item savedItem;
+        try {
+            savedItem = repository.save(theItem);
+        }catch (RuntimeException ex){
+            savedItem = null;
+        }
+        return savedItem;
     }
 
     @Override
     public void deleteItemById(int theId) {
         repository.deleteById(theId);
+    }
+
+    @Override
+    public long getId(int theId) {
+        boolean existe = repository.existsById(theId);
+        System.out.println("ID:" + theId + "Existe: " + existe);
+        if (existe){
+            return 0;
+        }
+        else{
+            return theId;
+        }
     }
 }

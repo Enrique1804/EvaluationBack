@@ -1,6 +1,7 @@
 package com.evaluation.backend.item;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -12,9 +13,11 @@ public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private long locationId;
 
     @Size(min = 1)
+    @NotNull
     private String state;
 
     private String address;

@@ -1,6 +1,7 @@
 package com.evaluation.backend.item;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity (name = "item")
@@ -10,9 +11,11 @@ public class Item {
     }
 
     @Id
+    @NotNull
     private long itemId;
 
     @Size(min = 1)
+    @NotNull
     private String itemName;
 
     private String description;

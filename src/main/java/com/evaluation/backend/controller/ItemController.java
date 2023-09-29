@@ -29,9 +29,19 @@ public class ItemController {
 
     @PostMapping("/items")
     public ResponseEntity<Object> createItem(@Valid @RequestBody Item item){
-        Item savedItem = service.postItem(item);
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
-        //return ResponseEntity.created(location).build();
+        int exist = (int)item.getItemId();
+        long existeId = service.getId(exist);
+        if (existeId != 0){
+            Item savedItem = service.postItem(item);
+            if (savedItem == null){
+                return ResponseEntity.badRequest().build();
+                //return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+            }else {
+                return new ResponseEntity<Object>(HttpStatus.CREATED);
+            }
+        }else {
+            return new ResponseEntity<Object>(HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping("/items/{theId}")
@@ -49,7 +59,6 @@ public class ItemController {
         Item item = service.getItemById(theId);
         if (item == null) {
             return new ResponseEntity<Item>(HttpStatus.NOT_FOUND);
-
         }
         service.deleteItemById(theId);
         return new ResponseEntity<Item>(HttpStatus.NO_CONTENT);
