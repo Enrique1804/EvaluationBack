@@ -4,12 +4,9 @@ import com.evaluation.backend.item.Item;
 import com.evaluation.backend.service.ItemServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -33,27 +30,28 @@ public class ItemController {
     @PostMapping("/items")
     public ResponseEntity<Object> createItem(@Valid @RequestBody Item item){
         Item savedItem = service.postItem(item);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{itemId}")
-                .buildAndExpand(savedItem.getItemId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<Object>(HttpStatus.CREATED);
+        //return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/items/{theId}")
     public ResponseEntity<Item> retrieveItemById(@PathVariable int theId){
         Item item = service.getItemById(theId);
         if (item != null){
-            return new ResponseEntity<>(item, HttpStatus.OK);
+            return new ResponseEntity<Item>(item, HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Item>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/items/{theId}")
-    public void deleteItem(@PathVariable int theId){
+    public ResponseEntity<Item> deleteItem(@PathVariable int theId){
+        Item item = service.getItemById(theId);
+        if (item == null) {
+            return new ResponseEntity<Item>(HttpStatus.NOT_FOUND);
+
+        }
         service.deleteItemById(theId);
+        return new ResponseEntity<Item>(HttpStatus.NO_CONTENT);
     }
-
-
 }

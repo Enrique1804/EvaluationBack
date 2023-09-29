@@ -23,6 +23,9 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item getItemById(int theId) {
         Optional<Item> item = repository.findById(theId);
+        if(item.isEmpty()){
+            return null;
+        }
         return item.get();
     }
 
