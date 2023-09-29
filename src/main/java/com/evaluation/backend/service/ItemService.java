@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface ItemService {
 
-    Item getItemById(long theId);
+    Item getItemById(int theId);
 
     List<Item> getItemsByState(String theState);
 
-    void postItem(Item theItem);
+    List<Item> getAllItems();
+
+    Item postItem(Item theItem);
 
     void deleteItemById(int theId);
 

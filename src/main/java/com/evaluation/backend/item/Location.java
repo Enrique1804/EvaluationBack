@@ -1,9 +1,6 @@
 package com.evaluation.backend.item;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -14,7 +11,7 @@ public class Location {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long locationId;
 
     @Size(min = 1)
@@ -26,8 +23,7 @@ public class Location {
 
     // Constructor
 
-    public Location(long locationId, String state, String address, int phoneNumber) {
-        this.locationId = locationId;
+    public Location(String state, String address, int phoneNumber) {
         this.state = state;
         this.address = address;
         this.phoneNumber = phoneNumber;

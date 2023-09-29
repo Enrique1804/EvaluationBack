@@ -5,12 +5,11 @@ import jakarta.validation.constraints.Size;
 
 @Entity (name = "item")
 public class Item {
-    protected Item(){
+    protected Item() {
 
     }
 
     @Id
-    @GeneratedValue
     private long itemId;
 
     @Size(min = 1)
@@ -24,11 +23,10 @@ public class Item {
 
     // Constructor
 
-    public Item(long itemId, String itemName, String description, Location location) {
+    public Item(long itemId, String itemName, String description) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.description = description;
-        this.location = location;
     }
 
     // Getters and Setters
