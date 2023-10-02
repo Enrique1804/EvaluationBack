@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity (name = "item")
 public class Item {
-    protected Item() {
+    public Item() {
 
     }
 
